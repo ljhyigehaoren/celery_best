@@ -10,3 +10,20 @@ CELERY_TIMEZONE = 'Asia/Shanghai'
 CELERY_TASK_SERIALIZER = 'json'
 #设置结果的序列化方式
 CELERY_RESULT_SERIALIZER = 'json'
+
+# 设置定时任务
+from datetime import timedelta
+from celery.schedules import crontab
+
+CELERYBEAT_SCHEDULE = {
+    # 'task1':{
+    #     'task':'celery_app.teskone.download1',
+    #     'schedule':timedelta(seconds=10),
+    #     'args':('https://www.qidian.com/',)
+    # },
+    'task2':{
+            'task':'celery_app.teskone.crawl_category_list',
+            'schedule':crontab(hour=23,minute=59),
+            'args':('http://www.xiachufang.com/category',)
+    }
+}
